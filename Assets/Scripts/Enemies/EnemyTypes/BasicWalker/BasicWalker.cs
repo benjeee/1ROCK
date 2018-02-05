@@ -41,12 +41,9 @@ public class BasicWalker : Enemy {
     void Start()
     {
         numAppendages = 2;
-        health = 5;
         body.parent = this;
         lLeg.parent = this;
         rLeg.parent = this;
-        lLeg.health = 1;
-        rLeg.health = 1;
 
         audioManager = GetComponent<EnemyAudioManager>();
 
@@ -95,7 +92,6 @@ public class BasicWalker : Enemy {
         {
             StartCoroutine(DelayDeath());
         }
-        Debug.Log("Health is: " + health);
     }
 
     IEnumerator DelayDeath()
@@ -107,7 +103,6 @@ public class BasicWalker : Enemy {
 
     public override void Die()
     {
-        Debug.Log("Enemy is dead!");
         onDeathDrop.DropItems();
         Destroy(this.gameObject);
     }

@@ -26,12 +26,11 @@ public class Enemy : MonoBehaviour{
 
     public virtual void Die()
     {
-        Debug.Log("Enemy is dead!");
         Destroy(this.gameObject);
     }
 
     public virtual void NotifyAppendageDestroyed(EnemyAppendage appendage)
     {
-        Debug.Log(appendage.transform.name + " was destroyed");
+
     }
 }

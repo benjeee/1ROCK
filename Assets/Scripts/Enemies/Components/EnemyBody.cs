@@ -54,7 +54,6 @@ public class EnemyBody : MonoBehaviour {
         }
         else if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Enemy hit player!");
             GameManager.instance.player.TakeDamage(damageValue);
             GameManager.instance.player.KnockBack(col, knockbackValue);
         }
@@ -66,6 +65,9 @@ public class EnemyBody : MonoBehaviour {
         {
             BasicProjectile bp = col.gameObject.GetComponent<BasicProjectile>();
             TakeDamage(bp.damageValue);
+        } else if (col.gameObject.CompareTag("Sword"))
+        {
+            TakeDamage(1);
         }
     }
 }

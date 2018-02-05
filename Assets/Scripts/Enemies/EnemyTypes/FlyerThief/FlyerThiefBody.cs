@@ -27,7 +27,6 @@ public class FlyerThiefBody : EnemyBody {
         base.OnTriggerEnter(col);
         if (col.gameObject.CompareTag("Spawn"))
         {
-            Debug.Log("Reached spawn!!");
             ftParent.SwitchTargets();
         }
     }

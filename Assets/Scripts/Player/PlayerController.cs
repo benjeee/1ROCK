@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerMotor))]
-[RequireComponent(typeof(PlayerThrow))]
+[RequireComponent(typeof(PlayerAttack))]
 [RequireComponent(typeof(Player))]
 public class PlayerController : MonoBehaviour {
 	
@@ -11,15 +11,14 @@ public class PlayerController : MonoBehaviour {
 	private float sens = 2.5f;
 
 	private PlayerMotor motor;
-    private PlayerThrow thrower;
+    private PlayerAttack attack;
     private Player player;
 
 	void Start()
 	{
-		Debug.Log ("Started Controller");
 		Cursor.visible = false;
 		motor = GetComponent<PlayerMotor> ();
-        thrower = GetComponent<PlayerThrow>();
+        attack = GetComponent<PlayerAttack>();
         player = GetComponent<Player>();
 	}
 
@@ -56,13 +55,13 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            thrower.Throw();
+            attack.Attack();
         }
     }
 
     void HandleEatRock()
     {
-        if (Input.GetButtonDown("Fire2") && thrower.equipped == PlayerThrow.ROCK)
+        if (Input.GetButtonDown("Fire2") && attack.equipped == PlayerAttack.ROCK)
         {
             player.EatRock();
         }
@@ -73,10 +72,10 @@ public class PlayerController : MonoBehaviour {
         float f = Input.GetAxis("Mouse ScrollWheel");
         if(f < 0)
         {
-            thrower.ShiftWeapon(-1);
+            attack.ShiftWeapon(-1);
         }else if(f > 0)
         {
-            thrower.ShiftWeapon(1);
+            attack.ShiftWeapon(1);
         }
     }
 
@@ -84,16 +83,20 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetKeyDown("1"))
         {
-            thrower.SwapWeapon(PlayerThrow.ROCK);
-        } else if (Input.GetKeyDown("2"))
+            attack.SwapWeapon(PlayerAttack.SWORD);
+        }
+        else if (Input.GetKeyDown("2"))
         {
-            thrower.SwapWeapon(PlayerThrow.FIREBALL);
+            attack.SwapWeapon(PlayerAttack.ROCK);
         } else if (Input.GetKeyDown("3"))
         {
-            thrower.SwapWeapon(PlayerThrow.SPEAR);
+            attack.SwapWeapon(PlayerAttack.FIREBALL);
         } else if (Input.GetKeyDown("4"))
         {
-            thrower.SwapWeapon(PlayerThrow.BASKETBALL);
+            attack.SwapWeapon(PlayerAttack.SPEAR);
+        } else if (Input.GetKeyDown("5"))
+        {
+            attack.SwapWeapon(PlayerAttack.BASKETBALL);
         }
     }
 

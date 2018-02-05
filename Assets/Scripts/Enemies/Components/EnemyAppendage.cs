@@ -58,7 +58,6 @@ public class EnemyAppendage : MonoBehaviour {
 
     private void DestroyAppendage()
     {
-        Debug.Log("Appendage Destroyed!");
         parent.NotifyAppendageDestroyed(this);
         Destroy(this.gameObject);
     }
@@ -72,7 +71,6 @@ public class EnemyAppendage : MonoBehaviour {
         }
         else if (col.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Enemy hit player!");
             GameManager.instance.player.TakeDamage(damageValue);
             GameManager.instance.player.KnockBack(col, knockbackValue);
         }
@@ -84,6 +82,9 @@ public class EnemyAppendage : MonoBehaviour {
         {
             BasicProjectile bp = col.gameObject.GetComponent<BasicProjectile>();
             TakeDamage(bp.damageValue);
+        } else if (col.gameObject.CompareTag("Sword"))
+        {
+            TakeDamage(1);
         }
     }
 }

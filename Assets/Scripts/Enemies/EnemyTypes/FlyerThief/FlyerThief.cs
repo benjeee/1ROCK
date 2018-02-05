@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(ChaseInAir))]
-[RequireComponent(typeof(OnDeathDrop))]
+//[RequireComponent(typeof(OnDeathDrop))]
 [RequireComponent(typeof(EnemyAudioManager))]
 public class FlyerThief : Enemy {
 
@@ -17,7 +17,6 @@ public class FlyerThief : Enemy {
     [SerializeField]
     private Transform[] spawns;
 
-    [SerializeField]
     private EnemyAudioManager audioManager;
 
     [SerializeField]
@@ -26,13 +25,13 @@ public class FlyerThief : Enemy {
     private Boolean chasingPlayer;
 
     private ChaseInAir chaseInAir;
-    private OnDeathDrop onDeathDrop;
+    //private OnDeathDrop onDeathDrop;
 
     void Start () {
         chasingPlayer = true;
         audioManager = GetComponent<EnemyAudioManager>();
         chaseInAir = GetComponent<ChaseInAir>();
-        onDeathDrop = GetComponent<OnDeathDrop>();
+        //onDeathDrop = GetComponent<OnDeathDrop>();
 	}
 
     public Transform ChooseSpawn()

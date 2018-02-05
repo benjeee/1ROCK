@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     private Camera cam;
 
     [SerializeField]
-    private int startingHealth = 3;
+    private int startingHealth = 10;
 
     [SerializeField]
     private int _numRocks = 10;
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour {
     private float timeUntilNextDamageWindow = 0;
 
     [SerializeField]
-    private float damageBufferTime = 0.1f;
+    private float damageBufferTime = 0.02f;
 
 	// Use this for initialization
 	void Start () {
@@ -106,12 +106,10 @@ public class Player : MonoBehaviour {
     {
         if(_numRocks <= 0)
         {
-            Debug.Log("Out of rocks!");
             return;
         }
         if(currHealth == maxHealth)
         {
-            Debug.Log("Already full health!");
             return;
         }
         HealDamage(1);
@@ -140,7 +138,6 @@ public class Player : MonoBehaviour {
 
     public void KnockBack(Collision col, float intensity)
     {
-        Debug.Log("KNOCKBACK HAPPENING");
         rb.AddForce(col.transform.forward * -1 * intensity, ForceMode.Impulse);
     }
 

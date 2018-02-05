@@ -2,12 +2,14 @@
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-public class PlayerThrow : MonoBehaviour
+public class PlayerAttack : MonoBehaviour
 {
-    public static int ROCK = 1;
-    public static int FIREBALL = 2;
-    public static int SPEAR = 3;
-    public static int BASKETBALL = 4;
+
+    public static int SWORD = 1;
+    public static int ROCK = 2;
+    public static int FIREBALL = 3;
+    public static int SPEAR = 4;
+    public static int BASKETBALL = 5;
 
     public int equipped = ROCK;
 
@@ -27,10 +29,16 @@ public class PlayerThrow : MonoBehaviour
     private Transform fireballPrefab;
 
     [SerializeField]
+    private Transform spearPrefab;
+
+    [SerializeField]
     private Transform rockShooter;
 
     [SerializeField]
     private Player player;
+
+    [SerializeField]
+    private Sword sword;
 
     [SerializeField]
     private AudioClip throwSound;
@@ -58,25 +66,31 @@ public class PlayerThrow : MonoBehaviour
             if (equipped == ROCK) equipped = BASKETBALL;
             else equipped--;
         }
-        Debug.Log(equipped);
     }
 
     public void SwapWeapon(int val)
     {
-        if(val == ROCK || val == FIREBALL || val == SPEAR || val == BASKETBALL)
+        if(val == SWORD || val == ROCK || val == FIREBALL || val == SPEAR || val == BASKETBALL)
         {
             equipped = val;
         }
     }
 
-    public void Throw()
+    public void Attack()
     {
-        if(equipped == ROCK)
+        if(equipped == SWORD)
+        {
+            sword.Swing();
+        }
+        else if(equipped == ROCK)
         {
             ThrowRock();
         } else if (equipped == FIREBALL)
         {
             ThrowFireball();
+        } else if (equipped == SPEAR)
+        {
+            ThrowSpear();
         }
     }
 
@@ -95,5 +109,11 @@ public class PlayerThrow : MonoBehaviour
     private void ThrowFireball()
     {
         Instantiate(fireballPrefab, rockShooter.position, rockShooter.rotation);
+    }
+
+    private void ThrowSpear()
+    {
+        Transform spear = Instantiate(spearPrefab, rockShooter.position, rockShooter.rotation);
+        spear.Rotate(90, 0, 0);
     }
 }
