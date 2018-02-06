@@ -10,7 +10,16 @@ public class Player : MonoBehaviour {
     private Camera cam;
 
     [SerializeField]
-    private int startingHealth = 10;
+    private int maxHealth;
+    private int currHealth;
+
+    [SerializeField]
+    private int maxMana;
+    private int currMana;
+
+    [SerializeField]
+    private int manaRefreshPerSecond;
+    private float timeSinceLastRefresh;
 
     [SerializeField]
     private int _numRocks = 10;
@@ -29,50 +38,35 @@ public class Player : MonoBehaviour {
 
     private AudioSource audioSource;
 
-    private int maxHealth;
-    private int currHealth;
-
-    private float timeUntilNextDamageWindow = 0;
-
-    [SerializeField]
-    private float damageBufferTime = 0.02f;
-
-	// Use this for initialization
 	void Start () {
         InitPlayer();
 	}
+
+    void Update()
+    {
+        RefreshMana();
+    }
 
     void InitPlayer()
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        maxHealth = startingHealth;
-        currHealth = startingHealth;
+        currHealth = maxHealth;
+        currMana = maxMana;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		if(timeUntilNextDamageWindow > 0)
-        {
-            timeUntilNextDamageWindow = Math.Max(0, timeUntilNextDamageWindow - Time.deltaTime);
-        }
-	}
 
     public void TakeDamage(int damage)
     {
-        if(timeUntilNextDamageWindow == 0)
+        GameManager.instance.SlowForSeconds(0.02f);
+        audioSource.clip = playerHurt;
+        audioSource.Play();
+        currHealth -= damage;
+        UIController.instance.ShowBlood(1.0f);
+        UIController.instance.UpdateHealthSlider(currHealth);
+        StartCoroutine(ScreenShake(damage));
+        if (currHealth <= 0)
         {
-            GameManager.instance.SlowForSeconds(0.02f);
-            audioSource.clip = playerHurt;
-            audioSource.Play();
-            currHealth -= damage;
-            timeUntilNextDamageWindow = damageBufferTime;
-            UIController.instance.ShowBlood(1.0f);
-            StartCoroutine(ScreenShake(damage));
-            if (currHealth <= 0)
-            {
-                Die();
-            }
+            Die();
         }
     }
 
@@ -100,6 +94,35 @@ public class Player : MonoBehaviour {
         {
             currHealth = maxHealth;
         }
+        UIController.instance.UpdateHealthSlider(currHealth);
+    }
+
+    public bool SpendMana(int amt)
+    {
+        int newManaTotal = currMana - amt;
+        if(newManaTotal >= 0)
+        {
+            currMana = newManaTotal;
+            UIController.instance.UpdateManaSlider(currMana);
+            return true;
+        }
+        return false;
+    }
+
+    private void RefreshMana()
+    {
+        timeSinceLastRefresh += Time.deltaTime;
+        if(timeSinceLastRefresh >= 1.0f)
+        {
+            RestoreMana(manaRefreshPerSecond);
+            timeSinceLastRefresh = 0f;
+        }
+    }
+
+    public void RestoreMana(int amt)
+    {
+        currMana = Math.Min(maxMana, currMana + amt);
+        UIController.instance.UpdateManaSlider(currMana);
     }
 
     public void EatRock()

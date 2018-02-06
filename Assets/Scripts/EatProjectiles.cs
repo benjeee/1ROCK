@@ -6,7 +6,7 @@ public class EatProjectiles : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.CompareTag("Projectile") || col.gameObject.CompareTag("Fireball"))
+        if (col.gameObject.CompareTag("Projectile") || col.gameObject.CompareTag("Fireball") || col.gameObject.CompareTag("Spear"))
         {
             Destroy(col.gameObject);
         }

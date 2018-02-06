@@ -66,6 +66,7 @@ public class BasicWalker : Enemy {
         if(numAppendages == 0)
         {
             Vector3 currPos = this.transform.position;
+            //TODO: animation for this
             this.transform.position = new Vector3(currPos.x, currPos.y - 1.2f, currPos.z);
             chaseOnGround.StopMoving();
             shootObjectForward.enabled = true;

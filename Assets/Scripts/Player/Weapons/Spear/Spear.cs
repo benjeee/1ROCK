@@ -42,7 +42,6 @@ public class Spear : BasicProjectile {
 
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Collided with " + col.gameObject.name);
         if(impaledEnemyAppendage == null && impaledEnemyBody == null)
         {
             if (col.gameObject.CompareTag("EnemyBody"))

@@ -7,9 +7,8 @@ public class PlayerAttack : MonoBehaviour
 
     public static int SWORD = 1;
     public static int ROCK = 2;
-    public static int FIREBALL = 3;
-    public static int SPEAR = 4;
-    public static int BASKETBALL = 5;
+    public static int SPEAR = 3;
+    public static int BASKETBALL = 4;
 
     public int equipped = ROCK;
 
@@ -70,7 +69,7 @@ public class PlayerAttack : MonoBehaviour
 
     public void SwapWeapon(int val)
     {
-        if(val == SWORD || val == ROCK || val == FIREBALL || val == SPEAR || val == BASKETBALL)
+        if(val == SWORD || val == ROCK || val == SPEAR || val == BASKETBALL)
         {
             equipped = val;
         }
@@ -85,10 +84,8 @@ public class PlayerAttack : MonoBehaviour
         else if(equipped == ROCK)
         {
             ThrowRock();
-        } else if (equipped == FIREBALL)
-        {
-            ThrowFireball();
-        } else if (equipped == SPEAR)
+        }
+        else if (equipped == SPEAR)
         {
             ThrowSpear();
         }
@@ -106,9 +103,12 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void ThrowFireball()
+    public void ThrowFireball()
     {
-        Instantiate(fireballPrefab, rockShooter.position, rockShooter.rotation);
+        if (GameManager.instance.player.SpendMana(50))
+        {
+            Instantiate(fireballPrefab, rockShooter.position, rockShooter.rotation);
+        }
     }
 
     private void ThrowSpear()

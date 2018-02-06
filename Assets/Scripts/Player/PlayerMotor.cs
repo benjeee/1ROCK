@@ -3,7 +3,16 @@
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour {
 
-	[SerializeField]
+    public static int FORWARD = 0;
+    public static int FORWARD_RIGHT = 1;
+    public static int FORWARD_LEFT = 2;
+    public static int RIGHT = 3;
+    public static int LEFT = 4;
+    public static int BACKWARD = 5;
+    public static int BACKWARD_RIGHT = 6;
+    public static int BACKWARD_LEFT = 7;
+
+    [SerializeField]
 	private Camera cam;
 
     [SerializeField]
@@ -20,6 +29,9 @@ public class PlayerMotor : MonoBehaviour {
     
     private bool inJump = false;
 	private Rigidbody rb;
+
+    [SerializeField]
+    private float dashForce = 20.0f;
 
 	void Start()
 	{
@@ -74,6 +86,42 @@ public class PlayerMotor : MonoBehaviour {
             rb.AddForce(new Vector3(0, jumpSpeed, 0), ForceMode.Impulse);
         }
         inJump = true;
+    }
+
+    public void Dash(int mode)
+    {
+        if(mode == FORWARD)
+        {
+            rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+        }
+        else if(mode == FORWARD_RIGHT)
+        {
+            rb.AddForce((transform.forward + transform.right).normalized * dashForce, ForceMode.Impulse);
+        }
+        else if (mode == FORWARD_LEFT)
+        {
+            rb.AddForce((transform.forward - transform.right).normalized * dashForce, ForceMode.Impulse);
+        }
+        else if (mode == RIGHT)
+        {
+            rb.AddForce(transform.right * dashForce, ForceMode.Impulse);
+        }
+        else if (mode == LEFT)
+        {
+            rb.AddForce(-transform.right * dashForce, ForceMode.Impulse);
+        }
+        else if (mode == BACKWARD)
+        {
+            rb.AddForce(-transform.forward * dashForce, ForceMode.Impulse);
+        }
+        else if (mode == BACKWARD_LEFT)
+        {
+            rb.AddForce((-transform.forward - transform.right).normalized * dashForce, ForceMode.Impulse);
+        }
+        else if (mode == BACKWARD_RIGHT)
+        {
+            rb.AddForce((-transform.forward + transform.right).normalized * dashForce, ForceMode.Impulse);
+        }
     }
 
     void OnCollisionStay(Collision collisionInfo)

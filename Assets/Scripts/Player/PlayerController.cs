@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour {
     private PlayerAttack attack;
     private Player player;
 
+    [SerializeField]
+    private float dashCooldown;
+    private float timeSinceLastDash;
+
 	void Start()
 	{
 		Cursor.visible = false;
@@ -43,11 +47,71 @@ public class PlayerController : MonoBehaviour {
         motor.CamRotate(camRotation);
     }
 
+    /*
     void HandleJump()
     {
         if (Input.GetButtonDown("Jump"))
         {
             motor.Jump();
+        }
+    }
+    */
+
+
+    //screen zoom/lean effects here
+    void HandleDash()
+    {
+        timeSinceLastDash += Time.deltaTime;
+        if (timeSinceLastDash < dashCooldown) return;
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            float xMov = Input.GetAxisRaw("Horizontal");
+            float zMov = Input.GetAxisRaw("Vertical");
+            if(zMov > 0)
+            {
+                if(xMov > 0)
+                {
+                    motor.Dash(PlayerMotor.FORWARD_RIGHT);
+                }
+                else if(xMov < 0)
+                {
+                    motor.Dash(PlayerMotor.FORWARD_LEFT);
+                }
+                else
+                {
+                    motor.Dash(PlayerMotor.FORWARD); ;
+                }
+            } else if(zMov < 0)
+            {
+                if (xMov > 0)
+                {
+                    motor.Dash(PlayerMotor.BACKWARD_RIGHT);
+                }
+                else if (xMov < 0)
+                {
+                    motor.Dash(PlayerMotor.BACKWARD_LEFT);
+                }
+                else
+                {
+                    motor.Dash(PlayerMotor.BACKWARD);
+                }
+            } else
+            {
+                if(xMov > 0)
+                {
+                    motor.Dash(PlayerMotor.RIGHT);
+                }
+                else if(xMov < 0)
+                {
+                    motor.Dash(PlayerMotor.LEFT);
+                }
+                else
+                {
+                    motor.Dash(PlayerMotor.FORWARD);
+                }
+            }
+            timeSinceLastDash = 0;
         }
     }
 
@@ -90,13 +154,19 @@ public class PlayerController : MonoBehaviour {
             attack.SwapWeapon(PlayerAttack.ROCK);
         } else if (Input.GetKeyDown("3"))
         {
-            attack.SwapWeapon(PlayerAttack.FIREBALL);
+            attack.SwapWeapon(PlayerAttack.SPEAR);
         } else if (Input.GetKeyDown("4"))
         {
-            attack.SwapWeapon(PlayerAttack.SPEAR);
-        } else if (Input.GetKeyDown("5"))
-        {
             attack.SwapWeapon(PlayerAttack.BASKETBALL);
+        }
+    }
+
+    void HandleFireball()
+    {
+        if (Input.GetKeyDown("f"))
+        {
+            Debug.Log("THROWING FEIREBALLL");
+            attack.ThrowFireball();
         }
     }
 
@@ -107,7 +177,8 @@ public class PlayerController : MonoBehaviour {
         HandleScrollEquip();
         HandleEatRock();
         HandleThrow();
+        HandleFireball();
         HandleMovement();
-        HandleJump();
+        HandleDash();
 	}
 }

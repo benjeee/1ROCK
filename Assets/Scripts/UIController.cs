@@ -9,9 +9,12 @@ public class UIController : MonoBehaviour {
 
     public Text rockCount;
 
+    public Slider healthSlider;
+
+    public Slider manaSlider;
+
     [SerializeField]
     private Image bloodImage;
-
     private Color originalBloodImageColor;
 
     void Awake()
@@ -35,6 +38,16 @@ public class UIController : MonoBehaviour {
     public void UpdateRockCountText(int numRocks)
     {
         rockCount.text = "YOU HAVE " + numRocks + " ROCKS";
+    }
+
+    public void UpdateHealthSlider(int health)
+    {
+        healthSlider.value = health;
+    }
+
+    public void UpdateManaSlider(int mana)
+    {
+        manaSlider.value = mana;
     }
 
     public void ShowBlood(float numSeconds)
