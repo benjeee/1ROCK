@@ -93,14 +93,17 @@ public class PlayerMotor : MonoBehaviour {
         if(mode == FORWARD)
         {
             rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+            StartCoroutine(GameManager.instance.player.ScreenZoom(1.5f, 1));
         }
         else if(mode == FORWARD_RIGHT)
         {
             rb.AddForce((transform.forward + transform.right).normalized * dashForce, ForceMode.Impulse);
+            StartCoroutine(GameManager.instance.player.ScreenZoom(1.5f, 1));
         }
         else if (mode == FORWARD_LEFT)
         {
             rb.AddForce((transform.forward - transform.right).normalized * dashForce, ForceMode.Impulse);
+            StartCoroutine(GameManager.instance.player.ScreenZoom(1.5f, 1));
         }
         else if (mode == RIGHT)
         {
@@ -113,15 +116,19 @@ public class PlayerMotor : MonoBehaviour {
         else if (mode == BACKWARD)
         {
             rb.AddForce(-transform.forward * dashForce, ForceMode.Impulse);
+            StartCoroutine(GameManager.instance.player.ScreenZoom(1.5f, -1));
         }
         else if (mode == BACKWARD_LEFT)
         {
             rb.AddForce((-transform.forward - transform.right).normalized * dashForce, ForceMode.Impulse);
+            StartCoroutine(GameManager.instance.player.ScreenZoom(1.5f, -1));
         }
         else if (mode == BACKWARD_RIGHT)
         {
             rb.AddForce((-transform.forward + transform.right).normalized * dashForce, ForceMode.Impulse);
+            StartCoroutine(GameManager.instance.player.ScreenZoom(1.5f, -1));
         }
+        
     }
 
     void OnCollisionStay(Collision collisionInfo)

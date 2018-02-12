@@ -2,11 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Enemy : MonoBehaviour{
+
+    public enum EnemyType
+    {
+        BasicWalker,
+        FlyerThief
+    }
 
     public int health;
 
     public float damageDisplayTime = 0.2f;
+
+    public EnemyType type;
+
+    public Wave wave;
+
+    public void Start()
+    {
+
+    }
 
     public virtual void TakeDamage(int amt)
     {
@@ -14,18 +30,13 @@ public class Enemy : MonoBehaviour{
         health -= amt;
         if(health <= 0)
         {
-            StartCoroutine(DelayDeath());
+            Invoke("Die", damageDisplayTime);
         }
-    }
-
-    IEnumerator DelayDeath()
-    {
-        yield return new WaitForSeconds(damageDisplayTime);
-        Die();
     }
 
     public virtual void Die()
     {
+        wave.RegisterEnemyDead(this);
         Destroy(this.gameObject);
     }
 

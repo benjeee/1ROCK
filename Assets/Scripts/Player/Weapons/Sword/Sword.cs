@@ -6,6 +6,8 @@ public class Sword : MonoBehaviour {
 
     private Animator animator;
 
+    public int damage;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -15,4 +17,6 @@ public class Sword : MonoBehaviour {
     {
         animator.SetTrigger("BaseAttack1");
     }
+
+    
 }

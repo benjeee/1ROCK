@@ -15,26 +15,17 @@ public class Spear : BasicProjectile {
 
     private float timeSinceLastTick;
 
-    private EnemyBody impaledEnemyBody;
-    private EnemyAppendage impaledEnemyAppendage;
+    private EnemyPart impaledEnemyPart;
 
     new void Update()
     {
         base.Update();
-        if(impaledEnemyBody != null)
+        if(impaledEnemyPart != null)
         {
             timeSinceLastTick += Time.deltaTime;
             if(timeSinceLastTick >= tickRate)
             {
-                impaledEnemyBody.TakeDamage(impaleDOT);
-                timeSinceLastTick = 0;
-            }
-        } else if(impaledEnemyAppendage != null)
-        {
-            timeSinceLastTick += Time.deltaTime;
-            if (timeSinceLastTick >= tickRate)
-            {
-                impaledEnemyAppendage.TakeDamage(impaleDOT);
+                impaledEnemyPart.TakeDamage(impaleDOT);
                 timeSinceLastTick = 0;
             }
         }
@@ -42,19 +33,14 @@ public class Spear : BasicProjectile {
 
     void OnTriggerEnter(Collider col)
     {
-        if(impaledEnemyAppendage == null && impaledEnemyBody == null)
+        if(impaledEnemyPart == null)
         {
-            if (col.gameObject.CompareTag("EnemyBody"))
+            if (col.gameObject.CompareTag("EnemyBody") || col.gameObject.CompareTag("EnemyAppendage"))
             {
-                impaledEnemyBody = col.GetComponent<EnemyBody>();
-                impaledEnemyBody.TakeDamage(impactDamage);
-                this.transform.parent = impaledEnemyBody.transform;
-                DisableMovement();
-            } else if (col.gameObject.CompareTag("EnemyAppendage"))
-            {
-                impaledEnemyAppendage = col.GetComponent<EnemyAppendage>();
-                impaledEnemyAppendage.TakeDamage(impactDamage);
-                this.transform.parent = impaledEnemyAppendage.transform;
+                impaledEnemyPart = col.GetComponent<EnemyPart>();
+                impaledEnemyPart.OnCollisionSlow();
+                impaledEnemyPart.TakeDamage(impactDamage);
+                this.transform.parent = impaledEnemyPart.transform;
                 DisableMovement();
             }
         }

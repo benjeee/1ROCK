@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
     public Player player;
+    public WaveManager waveManager;
 
     public const float xBound = 50f;
     public const float zBound = 50f;
@@ -22,6 +23,12 @@ public class GameManager : MonoBehaviour {
         {
             instance = this;
         }
+    }
+
+    void Start()
+    {
+        waveManager.Init();
+        waveManager.StartNextWave();
     }
 
     public void SlowForSeconds(float time)

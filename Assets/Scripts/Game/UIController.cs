@@ -9,6 +9,10 @@ public class UIController : MonoBehaviour {
 
     public Text rockCount;
 
+    public Text spearCount;
+
+    public Text swordCount;
+
     public Slider healthSlider;
 
     public Slider manaSlider;
@@ -16,6 +20,9 @@ public class UIController : MonoBehaviour {
     [SerializeField]
     private Image bloodImage;
     private Color originalBloodImageColor;
+
+    private Color equippedColor = new Color(1f, .27f, .79f);
+    private Color unequippedColor = Color.white;
 
     void Awake()
     {
@@ -33,11 +40,19 @@ public class UIController : MonoBehaviour {
     {
         bloodImage.enabled = false;
         originalBloodImageColor = new Color(bloodImage.color.r, bloodImage.color.g, bloodImage.color.b, bloodImage.color.a);
+        UpdateRockCountText(GameManager.instance.player.numRocks);
+        UpdateSpearCountText(GameManager.instance.player.numSpears);
+        ChangeEquipIndicator(PlayerAttack.SWORD);
     }
 
     public void UpdateRockCountText(int numRocks)
     {
-        rockCount.text = "YOU HAVE " + numRocks + " ROCKS";
+        rockCount.text = numRocks.ToString();
+    }
+
+    public void UpdateSpearCountText(int numSpears)
+    {
+        spearCount.text = numSpears.ToString();
     }
 
     public void UpdateHealthSlider(int health)
@@ -66,5 +81,25 @@ public class UIController : MonoBehaviour {
         }
         bloodImage.enabled = false;
         bloodImage.color = originalBloodImageColor;
+    }
+
+    public void ChangeEquipIndicator(int equipped)
+    {
+        if(equipped == PlayerAttack.SWORD)
+        {
+            rockCount.color = unequippedColor;
+            swordCount.color = equippedColor;
+            spearCount.color = unequippedColor;
+        } else if (equipped == PlayerAttack.ROCK)
+        {
+            rockCount.color = equippedColor;
+            swordCount.color = unequippedColor;
+            spearCount.color = unequippedColor;
+        } else
+        {
+            rockCount.color = unequippedColor;
+            swordCount.color = unequippedColor;
+            spearCount.color = equippedColor;
+        }
     }
 }

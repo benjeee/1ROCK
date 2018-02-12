@@ -2,7 +2,6 @@
 
 [RequireComponent(typeof(PlayerMotor))]
 [RequireComponent(typeof(PlayerAttack))]
-[RequireComponent(typeof(Player))]
 public class PlayerController : MonoBehaviour {
 	
 	[SerializeField]
@@ -12,7 +11,6 @@ public class PlayerController : MonoBehaviour {
 
 	private PlayerMotor motor;
     private PlayerAttack attack;
-    private Player player;
 
     [SerializeField]
     private float dashCooldown;
@@ -23,7 +21,6 @@ public class PlayerController : MonoBehaviour {
 		Cursor.visible = false;
 		motor = GetComponent<PlayerMotor> ();
         attack = GetComponent<PlayerAttack>();
-        player = GetComponent<Player>();
 	}
 
     void HandleMovement()
@@ -47,7 +44,6 @@ public class PlayerController : MonoBehaviour {
         motor.CamRotate(camRotation);
     }
 
-    /*
     void HandleJump()
     {
         if (Input.GetButtonDown("Jump"))
@@ -55,8 +51,6 @@ public class PlayerController : MonoBehaviour {
             motor.Jump();
         }
     }
-    */
-
 
     //screen zoom/lean effects here
     void HandleDash()
@@ -64,53 +58,28 @@ public class PlayerController : MonoBehaviour {
         timeSinceLastDash += Time.deltaTime;
         if (timeSinceLastDash < dashCooldown) return;
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Fire2"))
         {
             float xMov = Input.GetAxisRaw("Horizontal");
             float zMov = Input.GetAxisRaw("Vertical");
+            int dir = 0;
             if(zMov > 0)
             {
-                if(xMov > 0)
-                {
-                    motor.Dash(PlayerMotor.FORWARD_RIGHT);
-                }
-                else if(xMov < 0)
-                {
-                    motor.Dash(PlayerMotor.FORWARD_LEFT);
-                }
-                else
-                {
-                    motor.Dash(PlayerMotor.FORWARD); ;
-                }
+                if(xMov > 0) dir = PlayerMotor.FORWARD_RIGHT;
+                else if(xMov < 0) dir = PlayerMotor.FORWARD_LEFT;
+                else dir = PlayerMotor.FORWARD;
             } else if(zMov < 0)
             {
-                if (xMov > 0)
-                {
-                    motor.Dash(PlayerMotor.BACKWARD_RIGHT);
-                }
-                else if (xMov < 0)
-                {
-                    motor.Dash(PlayerMotor.BACKWARD_LEFT);
-                }
-                else
-                {
-                    motor.Dash(PlayerMotor.BACKWARD);
-                }
+                if (xMov > 0) dir = PlayerMotor.BACKWARD_RIGHT;
+                else if (xMov < 0) dir = PlayerMotor.BACKWARD_LEFT;
+                else dir = PlayerMotor.BACKWARD;
             } else
             {
-                if(xMov > 0)
-                {
-                    motor.Dash(PlayerMotor.RIGHT);
-                }
-                else if(xMov < 0)
-                {
-                    motor.Dash(PlayerMotor.LEFT);
-                }
-                else
-                {
-                    motor.Dash(PlayerMotor.FORWARD);
-                }
+                if(xMov > 0) dir = PlayerMotor.RIGHT;
+                else if(xMov < 0) dir = PlayerMotor.LEFT;
+                else dir = PlayerMotor.FORWARD;
             }
+            motor.Dash(dir);
             timeSinceLastDash = 0;
         }
     }
@@ -120,14 +89,6 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown("Fire1"))
         {
             attack.Attack();
-        }
-    }
-
-    void HandleEatRock()
-    {
-        if (Input.GetButtonDown("Fire2") && attack.equipped == PlayerAttack.ROCK)
-        {
-            player.EatRock();
         }
     }
 
@@ -155,17 +116,16 @@ public class PlayerController : MonoBehaviour {
         } else if (Input.GetKeyDown("3"))
         {
             attack.SwapWeapon(PlayerAttack.SPEAR);
-        } else if (Input.GetKeyDown("4"))
+        } /*else if (Input.GetKeyDown("4"))
         {
             attack.SwapWeapon(PlayerAttack.BASKETBALL);
-        }
+        }*/
     }
 
     void HandleFireball()
     {
         if (Input.GetKeyDown("f"))
         {
-            Debug.Log("THROWING FEIREBALLL");
             attack.ThrowFireball();
         }
     }
@@ -175,7 +135,7 @@ public class PlayerController : MonoBehaviour {
 	{
         HandleSwapEquip();
         HandleScrollEquip();
-        HandleEatRock();
+        HandleJump();
         HandleThrow();
         HandleFireball();
         HandleMovement();

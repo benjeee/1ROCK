@@ -38,8 +38,10 @@ public class BasicWalker : Enemy {
     private float stunTime = 1.0f;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
+        base.Start();
+        type = EnemyType.BasicWalker;
         numAppendages = 2;
         body.parent = this;
         lLeg.parent = this;
@@ -53,6 +55,7 @@ public class BasicWalker : Enemy {
         chaseOnGround.StartMoving();
         chaseOnGround.StartRotating();
         chaseOnGround.target = GameManager.instance.player.transform;
+        
 
         shootObjectForward = GetComponent<ShootObjectForward>();
         shootObjectForward.enabled = false;
@@ -76,35 +79,27 @@ public class BasicWalker : Enemy {
         }
     }
 
-    IEnumerator Stun()
+    private void Stun()
     {
-        chaseOnGround.enabled = false;
-        yield return new WaitForSeconds(stunTime);
-        chaseOnGround.enabled = true;
+        chaseOnGround.StopAll();
+        chaseOnGround.Invoke("StartAll", stunTime);
     }
 
     public override void TakeDamage(int amt)
     {
-        GameManager.instance.SlowForSeconds(0.02f);
         audioManager.playHurtSound();
-        StartCoroutine(Stun());
+        Stun();
         health-=amt;
         if (health <= 0)
         {
-            StartCoroutine(DelayDeath());
+            audioManager.playDeathSound();
+            Invoke("Die", damageDisplayTime);
         }
-    }
-
-    IEnumerator DelayDeath()
-    {
-        audioManager.playDeathSound();
-        yield return new WaitForSeconds(damageDisplayTime);
-        Die();
     }
 
     public override void Die()
     {
         onDeathDrop.DropItems();
-        Destroy(this.gameObject);
+        base.Die();
     }
 }

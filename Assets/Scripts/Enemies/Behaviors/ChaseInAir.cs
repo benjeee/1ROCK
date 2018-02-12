@@ -14,6 +14,11 @@ public class ChaseInAir : MonoBehaviour
     private bool canMove = true;
     private bool canRotate = true;
 
+    void Start()
+    {
+        target = GameManager.instance.player.transform;
+    }
+
     void Update()
     {
         RotateTowardsTarget();

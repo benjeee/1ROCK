@@ -22,11 +22,20 @@ public class Player : MonoBehaviour {
     private float timeSinceLastRefresh;
 
     [SerializeField]
-    private int _numRocks = 10;
+    private int _numRocks;
     public int numRocks
     {
         get { return _numRocks; }
     }
+
+    [SerializeField]
+    private int _numSpears;
+    public int numSpears
+    {
+        get { return _numSpears; }
+    }
+
+    public Sword sword;
 
     [SerializeField]
     private AudioClip pickupSound;
@@ -82,6 +91,21 @@ public class Player : MonoBehaviour {
         ResetCamPosition();
     }
 
+    public IEnumerator ScreenZoom(float intensity, int dir)
+    {
+        for(float i = 0f; i < 2.0; i+=.1f)
+        {
+            cam.fieldOfView -= .1f * intensity * dir;
+            yield return new WaitForSeconds(.005f);
+        }
+        for(float i = 0f; i < 2.0; i += .1f)
+        {
+            cam.fieldOfView += .1f * intensity * dir;
+            yield return new WaitForSeconds(.005f);
+        }
+        ResetCamPosition();
+    }
+
     void ResetCamPosition()
     {
         cam.transform.localPosition = new Vector3(0, 0, 0);
@@ -125,33 +149,34 @@ public class Player : MonoBehaviour {
         UIController.instance.UpdateManaSlider(currMana);
     }
 
-    public void EatRock()
-    {
-        if(_numRocks <= 0)
-        {
-            return;
-        }
-        if(currHealth == maxHealth)
-        {
-            return;
-        }
-        HealDamage(1);
-        DecrementRockCount();
-    }
-
     public void DecrementRockCount()
     {
         if(_numRocks > 0)
         {
             _numRocks--;
-            UIController.instance.UpdateRockCountText(numRocks);
+            UIController.instance.UpdateRockCountText(_numRocks);
         }
     }
 
     public void IncrementRockCount()
     {
         _numRocks++;
-        UIController.instance.UpdateRockCountText(numRocks);
+        UIController.instance.UpdateRockCountText(_numRocks);
+    }
+
+    public void DecrementSpearCount()
+    {
+        if (_numSpears > 0)
+        {
+            _numSpears--;
+            UIController.instance.UpdateSpearCountText(_numSpears);
+        }
+    }
+
+    public void IncrementSpearCount()
+    {
+        _numSpears++;
+        UIController.instance.UpdateSpearCountText(_numSpears);
     }
 
     private void Die()

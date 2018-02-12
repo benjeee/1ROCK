@@ -58,4 +58,14 @@ public class ChaseOnGround : MonoBehaviour {
     {
         canRotate = false;
     }
+
+    public void StopAll()
+    {
+        this.enabled = false;
+    }
+
+    public void StartAll()
+    {
+        this.enabled = true;
+    }
 }

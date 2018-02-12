@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
     public static int SWORD = 1;
     public static int ROCK = 2;
     public static int SPEAR = 3;
-    public static int BASKETBALL = 4;
+    //public static int BASKETBALL = 4;
 
     public int equipped = ROCK;
 
@@ -58,20 +58,22 @@ public class PlayerAttack : MonoBehaviour
     {
         if(dir == 1)
         {
-            if (equipped == BASKETBALL) equipped = ROCK;
+            if (equipped == SPEAR) equipped = SWORD;
             else equipped++;
         }else
         {
-            if (equipped == ROCK) equipped = BASKETBALL;
+            if (equipped == SWORD) equipped = SPEAR;
             else equipped--;
         }
+        UIController.instance.ChangeEquipIndicator(equipped);
     }
 
     public void SwapWeapon(int val)
     {
-        if(val == SWORD || val == ROCK || val == SPEAR || val == BASKETBALL)
+        if(val == SWORD || val == ROCK || val == SPEAR)
         {
             equipped = val;
+            UIController.instance.ChangeEquipIndicator(equipped);
         }
     }
 
@@ -113,7 +115,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void ThrowSpear()
     {
-        Transform spear = Instantiate(spearPrefab, rockShooter.position, rockShooter.rotation);
-        spear.Rotate(90, 0, 0);
+        if(player.numSpears > 0)
+        {
+            Transform spear = Instantiate(spearPrefab, rockShooter.position, rockShooter.rotation);
+            spear.Rotate(90, 0, 0);
+            player.DecrementSpearCount();
+        }
     }
 }

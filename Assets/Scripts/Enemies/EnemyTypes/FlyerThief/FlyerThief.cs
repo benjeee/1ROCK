@@ -27,10 +27,13 @@ public class FlyerThief : Enemy {
     private ChaseInAir chaseInAir;
     //private OnDeathDrop onDeathDrop;
 
-    void Start () {
+    new void Start () {
+        base.Start();
+        chaseInAir = GetComponent<ChaseInAir>();
+        chaseInAir.target = GameManager.instance.player.transform;
+        type = EnemyType.FlyerThief;
         chasingPlayer = true;
         audioManager = GetComponent<EnemyAudioManager>();
-        chaseInAir = GetComponent<ChaseInAir>();
         //onDeathDrop = GetComponent<OnDeathDrop>();
 	}
 
@@ -43,20 +46,13 @@ public class FlyerThief : Enemy {
 
     public override void TakeDamage(int damage)
     {
-        GameManager.instance.SlowForSeconds(0.04f);
         audioManager.playHurtSound();
         health -= damage;
         if(health <= 0)
         {
-            StartCoroutine(DelayDeath());
+            audioManager.playDeathSound();
+            Invoke("Die", deathDelayTime);
         }
-    }
-
-    IEnumerator DelayDeath()
-    {
-        audioManager.playDeathSound();
-        yield return new WaitForSeconds(deathDelayTime);
-        Die();
     }
 
     public override void Die()
