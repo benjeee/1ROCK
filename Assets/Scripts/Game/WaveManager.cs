@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "WaveSet", menuName = "WaveManager", order = 1)]
 public class WaveManager : ScriptableObject{
-
-    public Transform BasicWalkerPrefab;
-    public Transform FlyerThiefPrefab;
 
     [SerializeField]
     Wave[] waves;

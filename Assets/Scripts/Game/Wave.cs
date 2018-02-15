@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class Wave {
@@ -22,13 +20,13 @@ public class Wave {
         int i;
         for(i = 0; i < numWalkers; i++)
         {
-            Transform enemy = GameManager.Instantiate(waveManager.BasicWalkerPrefab, waveManager.PickNextGroundSpawn(), Quaternion.identity);
+            Transform enemy = GameManager.Instantiate(ResourceManager.instance.BasicWalkerPrefab, waveManager.PickNextGroundSpawn(), Quaternion.identity);
             enemy.GetComponent<Enemy>().wave = this;
             numEnemies++;
         }
         for (i = 0; i < numFlyerThiefs; i++)
         {
-            Transform enemy = GameManager.Instantiate(waveManager.FlyerThiefPrefab, waveManager.PickNextAirSpawn(), Quaternion.identity);
+            Transform enemy = GameManager.Instantiate(ResourceManager.instance.FlyerThiefPrefab, waveManager.PickNextAirSpawn(), Quaternion.identity);
             enemy.GetComponent<Enemy>().wave = this;
             numEnemies++;
         }

@@ -41,7 +41,7 @@ public class EnemyPart : MonoBehaviour {
 
     public void OnCollisionSlow()
     {
-        GameManager.instance.SlowForSeconds(0.04f);
+        GameManager.instance.SlowForSeconds(0.03f);
     }
 
     public void OnCollisionEnter(Collision col)

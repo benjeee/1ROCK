@@ -12,6 +12,11 @@ public class PlayerAttack : MonoBehaviour
 
     public int equipped = ROCK;
 
+    private bool throwingRocks;
+
+    [SerializeField]
+    private float throwSpeed = 0.4f;
+
     [SerializeField]
     private Camera cam;
 
@@ -40,6 +45,9 @@ public class PlayerAttack : MonoBehaviour
     private Sword sword;
 
     [SerializeField]
+    private RockAbsorb rockAbsorb;
+
+    [SerializeField]
     private AudioClip throwSound;
 
     private AudioSource audioSource;
@@ -52,11 +60,13 @@ public class PlayerAttack : MonoBehaviour
             this.enabled = false;
         }
         audioSource = GetComponent<AudioSource>();
+        throwingRocks = false;
     }
 
     public void ShiftWeapon(int dir)
     {
-        if(dir == 1)
+        CancelThrowRock();
+        if (dir == 1)
         {
             if (equipped == SPEAR) equipped = SWORD;
             else equipped++;
@@ -70,7 +80,8 @@ public class PlayerAttack : MonoBehaviour
 
     public void SwapWeapon(int val)
     {
-        if(val == SWORD || val == ROCK || val == SPEAR)
+        CancelThrowRock();
+        if (val == SWORD || val == ROCK || val == SPEAR)
         {
             equipped = val;
             UIController.instance.ChangeEquipIndicator(equipped);
@@ -85,11 +96,21 @@ public class PlayerAttack : MonoBehaviour
         }
         else if(equipped == ROCK)
         {
-            ThrowRock();
+            throwingRocks = true;
+            InvokeRepeating("ThrowRock", 0f, throwSpeed);
         }
         else if (equipped == SPEAR)
         {
             ThrowSpear();
+        }
+    }
+
+    public void CancelThrowRock()
+    {
+        if (throwingRocks)
+        {
+            CancelInvoke();
+            throwingRocks = false;
         }
     }
 
@@ -113,6 +134,12 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public void AbsorbRocks()
+    {
+        Debug.Log("Player attack initiating absorb");
+        rockAbsorb.Absorb();
+    }
+
     private void ThrowSpear()
     {
         if(player.numSpears > 0)
@@ -122,4 +149,6 @@ public class PlayerAttack : MonoBehaviour
             player.DecrementSpearCount();
         }
     }
+
+
 }

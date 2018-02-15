@@ -26,7 +26,6 @@ public class Enemy : MonoBehaviour{
 
     public virtual void TakeDamage(int amt)
     {
-        GameManager.instance.SlowForSeconds(1f);
         health -= amt;
         if(health <= 0)
         {

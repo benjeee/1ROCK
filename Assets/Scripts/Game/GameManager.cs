@@ -1,17 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
     public Player player;
     public WaveManager waveManager;
-
-    public const float xBound = 50f;
-    public const float zBound = 50f;
-    public const float yBound = 100f;
 
     void Awake()
     {

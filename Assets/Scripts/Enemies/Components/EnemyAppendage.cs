@@ -18,7 +18,7 @@ public class EnemyAppendage : EnemyPart {
         parent.TakeDamage(dmg);
     }
 
-    private void DestroyAppendage()
+    public virtual void DestroyAppendage()
     {
         parent.NotifyAppendageDestroyed(this);
         Destroy(this.gameObject);

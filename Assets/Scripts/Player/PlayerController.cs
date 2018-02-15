@@ -104,6 +104,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void HandleStopThrowing()
+    {
+        if (Input.GetButtonUp("Fire1"))
+        {
+            attack.CancelThrowRock();
+        }
+    }
+
     void HandleSwapEquip()
     {
         if (Input.GetKeyDown("1"))
@@ -130,6 +138,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void HandleRockAbsorb()
+    {
+        if (Input.GetKeyDown("q"))
+        {
+            Debug.Log("Rock absorb input received");
+            attack.AbsorbRocks();
+        }
+    }
+
 
     void Update()
 	{
@@ -140,5 +157,7 @@ public class PlayerController : MonoBehaviour {
         HandleFireball();
         HandleMovement();
         HandleDash();
-	}
+        HandleRockAbsorb();
+        HandleStopThrowing();
+    }
 }
