@@ -44,7 +44,7 @@ public class EnemyPart : MonoBehaviour {
         GameManager.instance.SlowForSeconds(0.03f);
     }
 
-    public void OnCollisionEnter(Collision col)
+    public virtual void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.CompareTag("Rock"))
         {
@@ -60,7 +60,7 @@ public class EnemyPart : MonoBehaviour {
         }
     }
 
-    public void OnTriggerEnter(Collider col)
+    public virtual void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.CompareTag("Fireball"))
         {

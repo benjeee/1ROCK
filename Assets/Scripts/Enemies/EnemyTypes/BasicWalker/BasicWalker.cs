@@ -37,7 +37,7 @@ public class BasicWalker : Enemy {
     [SerializeField]
     private float stunTime = 1.0f;
 
-    // Use this for initialization
+   
     new void Start()
     {
         base.Start();

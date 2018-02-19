@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RockSnakeHead : EnemyAppendage {
 
-    [SerializeField]
-    RockSnakeHead parentHead;
+    //[SerializeField]
+    public RockSnakeHead parentHead;
 
-    [SerializeField]
-    RockSnakeHead childHead;
+    //[SerializeField]
+    public RockSnakeHead childHead;
 
     RockSnake parentRockSnake;
 
@@ -36,6 +36,7 @@ public class RockSnakeHead : EnemyAppendage {
         if(childHead != null)
         {
             childHead.SetNewParentEnemy(rockSnake);
+            rockSnake.head = childHead;
         }
     }
 

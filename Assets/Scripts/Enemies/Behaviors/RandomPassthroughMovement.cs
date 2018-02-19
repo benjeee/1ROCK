@@ -5,6 +5,7 @@ using UnityEngine;
 public class RandomPassthroughMovement : MonoBehaviour {
 
     public Vector3 currTarget;
+    public Vector3 groundTarget;
 
     [SerializeField]
     float moveSpeed;
@@ -12,15 +13,12 @@ public class RandomPassthroughMovement : MonoBehaviour {
     [SerializeField]
     float rotateSpeed;
 
-	// Use this for initialization
 	void Start () {
         moveSpeed = 20;
         rotateSpeed = 5;
-        //transform.position = GetNewStartPoint();
-        //currTarget = GetNewTarget();
+        groundTarget = new Vector3(0, 0, 0);
     }
 	
-	// Update is called once per frame
 	void Update () {
         if(currTarget == null)
         {
@@ -44,11 +42,8 @@ public class RandomPassthroughMovement : MonoBehaviour {
 
     Vector3 GetNewTarget()
     {
-        //Vector2 centralPointOnSurface = Random.insideUnitCircle * 10;
-        //Vector3 angleGenerationPoint = new Vector3(centralPointOnSurface.x, Random.Range(0f, 5f), centralPointOnSurface.y);
-        //Vector3 angleGenerationPoint = new Vector3(0, 0, 0);
-        //Vector3 diff = angleGenerationPoint - transform.position;
-        Vector3 diffNormalized = -(transform.position / transform.position.magnitude);
+        //for player-directed movement, add line here to make groundTarget the current position of player
+        Vector3 diffNormalized = ((groundTarget - transform.position) / transform.position.magnitude);
         return diffNormalized * 130f;
     }
 

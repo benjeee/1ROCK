@@ -142,7 +142,6 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetKeyDown("q"))
         {
-            Debug.Log("Rock absorb input received");
             attack.AbsorbRocks();
         }
     }

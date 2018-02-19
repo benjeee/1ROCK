@@ -136,7 +136,6 @@ public class PlayerAttack : MonoBehaviour
 
     public void AbsorbRocks()
     {
-        Debug.Log("Player attack initiating absorb");
         rockAbsorb.Absorb();
     }
 

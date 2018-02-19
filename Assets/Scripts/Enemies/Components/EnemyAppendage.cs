@@ -8,14 +8,15 @@ public class EnemyAppendage : EnemyPart {
 
     public override void TakeDamage(int dmg)
     {
+        int prevHealth = health;
         health -= dmg;
-        if(health <= 0)
+        renderer.material = damageTakenMaterial;
+        timeSinceDamageTaken = 0;
+        if (health <= 0)
         {
             Invoke("DestroyAppendage", damageDisplayTime);
         }
-        renderer.material = damageTakenMaterial;
-        timeSinceDamageTaken = 0;
-        parent.TakeDamage(dmg);
+        parent.TakeDamage(Mathf.Min(prevHealth, dmg));
     }
 
     public virtual void DestroyAppendage()

@@ -8,7 +8,9 @@ public class Enemy : MonoBehaviour{
     public enum EnemyType
     {
         BasicWalker,
-        FlyerThief
+        FlyerThief, 
+        RockSnake,
+        QuadBlaster
     }
 
     public int health;
