@@ -9,6 +9,10 @@ public class ResourceManager : MonoBehaviour {
     public Transform BasicWalkerPrefab;
     public Transform FlyerThiefPrefab;
     public Transform RockSnakePrefab;
+    public Transform QuadBlasterPrefab;
+    public Transform BomberManPrefab;
+
+    public Transform BasicExplosionPrefab;
 
     void Awake()
     {

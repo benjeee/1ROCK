@@ -18,6 +18,7 @@ public class BomberMan : Enemy {
     {
         //instantiate some explosion prefab (trigger sphere collider + particle system + script that detects player collision and deals damage)
         Debug.Log("EXPLOOODDEEE!!!");
+        Instantiate(ResourceManager.instance.BasicExplosionPrefab, transform.position, transform.rotation);
     }
 
     public override void Die()
