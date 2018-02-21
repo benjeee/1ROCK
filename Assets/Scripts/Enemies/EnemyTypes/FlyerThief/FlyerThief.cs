@@ -25,16 +25,12 @@ public class FlyerThief : Enemy {
     private Boolean chasingPlayer;
 
     private ChaseInAir chaseInAir;
-    //private OnDeathDrop onDeathDrop;
 
-    new void Start () {
-        base.Start();
+    void Start () { 
         chaseInAir = GetComponent<ChaseInAir>();
         chaseInAir.target = GameManager.instance.player.transform;
-        type = EnemyType.FlyerThief;
         chasingPlayer = true;
         audioManager = GetComponent<EnemyAudioManager>();
-        //onDeathDrop = GetComponent<OnDeathDrop>();
 	}
 
     public Transform ChooseSpawn()

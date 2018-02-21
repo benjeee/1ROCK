@@ -5,26 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class Enemy : MonoBehaviour{
 
-    public enum EnemyType
-    {
-        BasicWalker,
-        FlyerThief, 
-        RockSnake,
-        QuadBlaster
-    }
-
     public int health;
 
     public float damageDisplayTime = 0.2f;
 
-    public EnemyType type;
-
     public Wave wave;
-
-    public void Start()
-    {
-
-    }
 
     public virtual void TakeDamage(int amt)
     {

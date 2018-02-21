@@ -38,10 +38,11 @@ public class BasicWalker : Enemy {
     private float stunTime = 1.0f;
 
    
-    new void Start()
+    void Start()
     {
-        base.Start();
-        type = EnemyType.BasicWalker;
+        Vector3 currPos = this.transform.position;
+        this.transform.position = new Vector3(currPos.x, currPos.y + 2.2f, currPos.z);
+
         numAppendages = 2;
         body.parent = this;
         lLeg.parent = this;

@@ -12,9 +12,6 @@ public class ShootProjectileAtPlayer : MonoBehaviour {
     private float reloadSpeed = 1.0f;
 
     [SerializeField]
-    private float spawnDistance = 1.0f;
-
-    [SerializeField]
     private AudioClip shootSound;
 
     private AudioSource audioSource;

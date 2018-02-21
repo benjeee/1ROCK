@@ -20,10 +20,6 @@ public class RandomPassthroughMovement : MonoBehaviour {
     }
 	
 	void Update () {
-        if(currTarget == null)
-        {
-            currTarget = GetNewTarget();
-        }
         if (ReachedTarget())
         {
             transform.position = GetNewStartPoint();

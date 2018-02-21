@@ -18,9 +18,8 @@ public class QuadBlaster : Enemy {
 
     int numBlasters;
 
-    new void Start()
+    void Start()
     {
-        base.Start();
         qbUL.EnableShooting();
         qbUR.Invoke("EnableShooting", .25f);
         qbBR.Invoke("EnableShooting", .5f);

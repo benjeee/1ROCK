@@ -10,11 +10,15 @@ public class QuadBlasterBlaster : EnemyAppendage {
 
     ShootProjectileAtPlayer shooter;
 
+    void Awake()
+    {
+        shooter = GetComponent<ShootProjectileAtPlayer>();
+        shooter.enabled = false;
+    }
+
     new void Start()
     {
         base.Start();
-        shooter = GetComponent<ShootProjectileAtPlayer>();
-        shooter.enabled = false;
     }
 
     public void EnableShooting()

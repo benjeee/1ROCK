@@ -7,7 +7,11 @@ public class BomberMan : Enemy {
 
     ChaseOnGround chase;
 
-	new void Start () {
+	void Start () {
+
+        Vector3 currPos = this.transform.position;
+        this.transform.position = new Vector3(currPos.x, currPos.y + 2.7f, currPos.z);
+
         chase = GetComponent<ChaseOnGround>();
         chase.target = GameManager.instance.player.transform;
         chase.StartMoving();
@@ -16,8 +20,6 @@ public class BomberMan : Enemy {
 
     public void Explode()
     {
-        //instantiate some explosion prefab (trigger sphere collider + particle system + script that detects player collision and deals damage)
-        Debug.Log("EXPLOOODDEEE!!!");
         Instantiate(ResourceManager.instance.BasicExplosionPrefab, transform.position, transform.rotation);
     }
 

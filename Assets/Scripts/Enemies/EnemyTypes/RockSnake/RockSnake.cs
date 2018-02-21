@@ -11,7 +11,7 @@ public class RockSnake : Enemy {
     [SerializeField]
     int numAppendages;
 
-	new void Start () {
+	void Start () {
         movement = GetComponent<RandomPassthroughMovement>();
         health = 999999;
 	}
