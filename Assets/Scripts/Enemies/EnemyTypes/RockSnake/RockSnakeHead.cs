@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyAudioManager))]
 public class RockSnakeHead : EnemyAppendage {
 
     //[SerializeField]
@@ -12,10 +13,13 @@ public class RockSnakeHead : EnemyAppendage {
 
     RockSnake parentRockSnake;
 
+    EnemyAudioManager audioManager;
+
     new void Start()
     {
         base.Start();
         parentRockSnake = parent.GetComponent<RockSnake>();
+        audioManager = GetComponent<EnemyAudioManager>();
     }
 
     void RegisterParentDead()
@@ -42,10 +46,17 @@ public class RockSnakeHead : EnemyAppendage {
 
     public override void DestroyAppendage()
     {
+        audioManager.playDeathSound();
         if(childHead != null)
         {
             childHead.RegisterParentDead();
         }
         base.DestroyAppendage();
+    }
+
+    public override void TakeDamage(int dmg)
+    {
+        audioManager.playHurtSound();
+        base.TakeDamage(dmg);
     }
 }

@@ -35,7 +35,7 @@ public class ShootProjectileAtPlayer : MonoBehaviour {
 
     private void ShootObject()
     {
-        audioSource.PlayOneShot(shootSound);
+        audioSource.PlayOneShot(shootSound, 0.3f);
         Vector3 relativePos = GameManager.instance.player.transform.position - transform.position;
         Instantiate(projectilePrefab, transform.position, Quaternion.LookRotation(relativePos));
     }

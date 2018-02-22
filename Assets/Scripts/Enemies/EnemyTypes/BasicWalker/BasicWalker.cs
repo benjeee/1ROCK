@@ -37,7 +37,9 @@ public class BasicWalker : Enemy {
     [SerializeField]
     private float stunTime = 1.0f;
 
-   
+    [SerializeField]
+    private AudioSource approachAudioSource;
+
     void Start()
     {
         Vector3 currPos = this.transform.position;
@@ -69,6 +71,7 @@ public class BasicWalker : Enemy {
         numAppendages--;
         if(numAppendages == 0)
         {
+            approachAudioSource.enabled = false;
             Vector3 currPos = this.transform.position;
             //TODO: animation for this
             this.transform.position = new Vector3(currPos.x, currPos.y - 1.2f, currPos.z);

@@ -31,4 +31,6 @@ public class QuadBlasterBlaster : EnemyAppendage {
         parentArm.DestroyBlaster();
         base.DestroyAppendage();
     }
+
+
 }

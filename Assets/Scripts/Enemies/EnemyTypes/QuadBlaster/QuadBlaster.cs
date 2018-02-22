@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(ChaseInAir))]
+[RequireComponent(typeof(EnemyAudioManager))]
 public class QuadBlaster : Enemy {
 
     [SerializeField]
@@ -16,6 +17,8 @@ public class QuadBlaster : Enemy {
 
     ChaseInAir chaseInAir;
 
+    EnemyAudioManager audioManager;
+
     int numBlasters;
 
     void Start()
@@ -26,6 +29,8 @@ public class QuadBlaster : Enemy {
         qbBL.Invoke("EnableShooting", .75f);
 
         chaseInAir = GetComponent<ChaseInAir>();
+
+        audioManager = GetComponent<EnemyAudioManager>();
 
         numBlasters = 4;
     }
@@ -40,6 +45,17 @@ public class QuadBlaster : Enemy {
         if(numBlasters == 0)
         {
             chaseInAir.moveSpeed = 1;
+        }
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        audioManager.playHurtSound();
+        health -= damage;
+        if (health <= 0)
+        {
+            audioManager.playDeathSound();
+            Invoke("Die", damageDisplayTime);
         }
     }
 }

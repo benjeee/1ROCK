@@ -12,7 +12,7 @@ public class BomberManBody : EnemyBody {
         base.OnCollisionEnter(col);
         if (col.gameObject.CompareTag("Player"))
         {
-            bomberManParent.Die();
+            bomberManParent.Explode();
         }
     }
 

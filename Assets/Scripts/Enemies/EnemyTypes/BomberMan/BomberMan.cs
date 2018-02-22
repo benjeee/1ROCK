@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(ChaseOnGround))]
+[RequireComponent(typeof(EnemyAudioManager))]
 public class BomberMan : Enemy {
 
     ChaseOnGround chase;
 
-	void Start () {
+    EnemyAudioManager audioManager;
 
+    void Start () {
         Vector3 currPos = this.transform.position;
         this.transform.position = new Vector3(currPos.x, currPos.y + 2.7f, currPos.z);
 
@@ -16,17 +18,24 @@ public class BomberMan : Enemy {
         chase.target = GameManager.instance.player.transform;
         chase.StartMoving();
         chase.StartRotating();
+
+        audioManager = GetComponent<EnemyAudioManager>();
 	}
 
     public void Explode()
     {
+        audioManager.playDeathSound();
         Instantiate(ResourceManager.instance.BasicExplosionPrefab, transform.position, transform.rotation);
+        Invoke("Die", damageDisplayTime);
     }
 
-    public override void Die()
+    public override void TakeDamage(int damage)
     {
-        Explode();
-        base.Die();
+        audioManager.playHurtSound();
+        health -= damage;
+        if (health <= 0)
+        {
+            Explode();
+        }
     }
-
 }
