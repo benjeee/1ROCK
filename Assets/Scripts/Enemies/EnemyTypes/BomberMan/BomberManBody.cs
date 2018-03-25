@@ -10,7 +10,7 @@ public class BomberManBody : EnemyBody {
     public override void OnCollisionEnter(Collision col)
     {
         base.OnCollisionEnter(col);
-        if (col.gameObject.CompareTag("Player"))
+        if (col.gameObject.CompareTag("Player") && bomberManParent.canTakeDamage)
         {
             bomberManParent.Explode();
         }

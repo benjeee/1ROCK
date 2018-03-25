@@ -73,5 +73,11 @@ public class EnemyPart : MonoBehaviour {
             OnCollisionSlow();
             TakeDamage(GameManager.instance.player.sword.damage);
         }
+        else if (col.gameObject.CompareTag("Explosion"))
+        {
+            OnCollisionSlow();
+            BasicExplosion e = col.gameObject.GetComponent<BasicExplosion>();
+            TakeDamage(e.DamageValue);
+        }
     }
 }

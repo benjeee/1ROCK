@@ -15,6 +15,10 @@ public class BasicExplosion : MonoBehaviour {
 
     [SerializeField]
     int damageValue;
+    public int DamageValue
+    {
+        get { return damageValue; }
+    }
 
     [SerializeField]
     float lifetime;
@@ -42,9 +46,6 @@ public class BasicExplosion : MonoBehaviour {
         {
             GameManager.instance.player.TakeDamage(damageValue);
             GameManager.instance.player.KnockBack(col, knockbackValue);
-        } else if(col.gameObject.CompareTag("EnemyBody") || col.gameObject.CompareTag("EnemyAppendage"))
-        {
-            col.gameObject.GetComponent<Enemy>().TakeDamage(damageValue / 2);
         }
     }
 }

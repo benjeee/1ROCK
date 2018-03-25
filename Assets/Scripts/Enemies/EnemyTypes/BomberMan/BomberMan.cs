@@ -10,7 +10,11 @@ public class BomberMan : Enemy {
 
     EnemyAudioManager audioManager;
 
+    public bool canTakeDamage;
+
     void Start () {
+        canTakeDamage = true;
+
         Vector3 currPos = this.transform.position;
         this.transform.position = new Vector3(currPos.x, currPos.y + 2.7f, currPos.z);
 
@@ -24,6 +28,7 @@ public class BomberMan : Enemy {
 
     public void Explode()
     {
+        canTakeDamage = false;
         audioManager.playDeathSound();
         Instantiate(ResourceManager.instance.BasicExplosionPrefab, transform.position, transform.rotation);
         Invoke("Die", damageDisplayTime);
@@ -31,11 +36,14 @@ public class BomberMan : Enemy {
 
     public override void TakeDamage(int damage)
     {
-        audioManager.playHurtSound();
-        health -= damage;
-        if (health <= 0)
+        if (canTakeDamage)
         {
-            Explode();
+            audioManager.playHurtSound();
+            health -= damage;
+            if (health <= 0)
+            {
+                Explode();
+            }
         }
     }
 }
