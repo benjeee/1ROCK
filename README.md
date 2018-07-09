@@ -1,2 +1,7 @@
 # 1ROCK
-you have 1 rock
+3D shooter game made in Unity! The goal is to kill waves of enemies without dying. You start with just 1 rock (or you will when I finish balancing the game) that you can throw at the enemy and get more rocks and a sword and some spears as you go. Sounds, music, amateur graphics.. this game has everything
+
+<img src="https://i.imgur.com/ueUV9ps.png">
+<img src="https://i.imgur.com/bvnh12B.png">
+<img src="https://i.imgur.com/HEoHnRO.png">
+<img src="https://i.imgur.com/N25WLgv.png">
