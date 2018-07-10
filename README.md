@@ -5,3 +5,7 @@
 <img src="https://i.imgur.com/bvnh12B.png">
 <img src="https://i.imgur.com/HEoHnRO.png">
 <img src="https://i.imgur.com/N25WLgv.png">
+
+
+gameplay vid with 'dark mode' :
+[![vid](http://img.youtube.com/vi/U1kt1CW8Lug/0.jpg)](http://www.youtube.com/watch?v=U1kt1CW8Lug "some gameplay")
